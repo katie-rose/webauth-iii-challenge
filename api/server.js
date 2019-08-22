@@ -20,12 +20,9 @@ server.get("/", (req, res) => {
 });
 
 server.get("/token", (req, res) => {
-  // use jsonwebtoken library to produce a token
-  // add your name to the token's payload
   const role = "admin";
   const payload = {
-    // subject is normally the user's id (who/what the token describes)
-    subject: "me", // translates unto the "sub" property on the token
+    subject: "me",
     role
   };
   const secret = "is it secret, is it safe?";
@@ -34,7 +31,6 @@ server.get("/token", (req, res) => {
   };
   const token = jwt.sign(payload, secret, options);
 
-  // return the token to the client
   res.status(200).json({ role: role, token });
 });
 

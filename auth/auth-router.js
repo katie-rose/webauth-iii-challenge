@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const Users = require("../users/users-model.js");
 const secrets = require("../config/secrets.js");
 
-// for endpoints beginning with /api/auth
 router.post("/register", (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
@@ -27,7 +26,7 @@ router.post("/login", (req, res) => {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
-        const token = getJwt(user); //<<<<<<<<<<<<<
+        const token = getJwt(user);
 
         res.status(200).json({
           message: `Welcome ${user.username}!`,
@@ -44,8 +43,7 @@ router.post("/login", (req, res) => {
 
 function getJwt(user) {
   const payload = {
-    // subject is normally the user's id (who/what the token describes)
-    subject: user.id, // translates unto the "sub" property on the token
+    subject: user.id,
     username: user.username,
     jwtid: 1
   };
